@@ -1,556 +1,453 @@
-SET SERVEROUTPUT ON;
+set serveroutput on;
 
+-- Create the tables
 
-
-
---creating tables
-
-CREATE TABLE contractors (
-    contractor_id   NUMBER PRIMARY KEY,
-    contractor_name VARCHAR2(100) NOT NULL,
-    phone_number    VARCHAR2(20),
-    email           VARCHAR2(100)
+CREATE TABLE customers (
+    customer_id  NUMBER PRIMARY KEY,
+    first_name   VARCHAR2(50),
+    last_name    VARCHAR2(50),
+    email        VARCHAR2(100),
+    phone_number NUMBER,
+    address      VARCHAR2(200)
 );
 
-CREATE TABLE home_projects (
-    project_id       NUMBER PRIMARY KEY,
-    project_name     VARCHAR2(100) NOT NULL,
-    project_status   VARCHAR2(50),
-    available_houses NUMBER,
-    contractor_id    NUMBER
-        REFERENCES contractors ( contractor_id )
+CREATE TABLE cars (
+    car_id         NUMBER PRIMARY KEY,
+    make           VARCHAR2(50),
+    model          VARCHAR2(50),
+    year           NUMBER,
+    color          VARCHAR2(50),
+    price          NUMBER,
+    purchase_count NUMBER
 );
 
-CREATE TABLE sales (
-    sale_id    NUMBER PRIMARY KEY,
-    project_id NUMBER
-        REFERENCES home_projects ( project_id ),
-    amount     NUMBER(10, 2),
-    sale_date  DATE
+CREATE TABLE purchases (
+    purchase_id   NUMBER PRIMARY KEY,
+    customer_id   NUMBER
+        REFERENCES customers ( customer_id ),
+    car_id        NUMBER
+        REFERENCES cars ( car_id ),
+    purchase_date DATE,
+    total_amount  NUMBER
 );
 
+--Insert values into customers table
 
-
-
-
-
-
--- inserting values into the  contractors table
-
-INSERT INTO contractors VALUES (
+INSERT INTO customers VALUES (
     1,
-    'John',
-    6379769834,
-    'john@gmail.com'
+    'priyanka',
+    'jena',
+    'abc@gmail.com',
+    6370574749,
+    'abcd'
 );
 
-INSERT INTO contractors VALUES (
+INSERT INTO customers VALUES (
     2,
-    'Simi',
-    9875302356,
-    'simran5@yahoo.com'
+    'rimsy',
+    'swain',
+    'efg@gmail.com',
+    7976197635,
+    'dffda'
 );
 
-INSERT INTO contractors VALUES (
+INSERT INTO customers VALUES (
     3,
-    'Trisha',
-    8567788931,
-    'tri67sha@gmail.com'
+    'sonika',
+    'sahoo',
+    'sdf@gmail.com',
+    9437210987,
+    'hunn'
 );
 
-INSERT INTO contractors VALUES (
+INSERT INTO customers VALUES (
     4,
-    'Kevin',
-    7234594500,
-    'kev97@yahoo.com'
+    'sarada',
+    'pradhan',
+    'hgn@gmail.com',
+    6370564789,
+    'lsjd'
 );
 
-INSERT INTO contractors VALUES (
+INSERT INTO customers VALUES (
     5,
-    'Cipher',
-    9776540412,
-    'ciph19@gmail.com'
+    'sambit',
+    'tripathy',
+    'sam@gmail.com',
+    9238581335,
+    'rgdsa'
 );
 
-SELECT
-    *
-FROM
-    contractors;
-    
-    
-    
-    
-    
-    
-    
+--Insert values into cars table
 
--- inserting values into the home_projects table
-
-INSERT INTO home_projects VALUES (
+INSERT INTO cars VALUES (
     1,
-    'Project A',
-    'In Progress',
-    5,
-    1
+    'Jaguar',
+    'E-PACE',
+    2000,
+    'Silver',
+    5000000,
+    10
 );
 
-INSERT INTO home_projects VALUES (
+INSERT INTO cars VALUES (
     2,
-    'Project B',
-    'Completed',
-    0,
-    3
-);
-
-INSERT INTO home_projects VALUES (
-    3,
-    'Project C',
-    'In Progress',
-    3,
-    1
-);
-
-INSERT INTO home_projects VALUES (
-    4,
-    'Project D',
-    'In Progress',
-    2,
-    2
-);
-
-INSERT INTO home_projects VALUES (
-    5,
-    'Project E',
-    'Completed',
-    4,
+    'Audi',
+    'Q7',
+    2007,
+    'White',
+    3000000,
     5
 );
 
-INSERT INTO home_projects VALUES (
-    6,
-    'Project F',
-    'In Progress',
-    1,
-    1
-);
-
-INSERT INTO home_projects VALUES (
-    7,
-    'Project G',
-    'Completed',
-    0,
-    4
-);
-
-INSERT INTO home_projects VALUES (
-    8,
-    'Project H',
-    'Completed',
+INSERT INTO cars VALUES (
     3,
+    'Mercedes-Benz',
+    'A-Class',
+    2020,
+    'Red',
+    7000000,
     2
 );
 
-SELECT
-    *
-FROM
-    home_projects;
-    
-    
-    
-    
-    
-    
-
--- inserting values into the sales table
-
-INSERT INTO sales VALUES (
-    1,
-    3,
-    208000,
-    TO_DATE('2022-04-12', 'YYYY-MM-DD')
-);
-
-INSERT INTO sales VALUES (
-    2,
-    1,
-    117000,
-    TO_DATE('2022-05-09', 'YYYY-MM-DD')
-);
-
-INSERT INTO sales VALUES (
-    3,
-    1,
-    250000,
-    TO_DATE('2022-05-14', 'YYYY-MM-DD')
-);
-
-INSERT INTO sales VALUES (
+INSERT INTO cars VALUES (
     4,
-    6,
-    380000,
-    TO_DATE('2022-06-22', 'YYYY-MM-DD')
+    'Honda',
+    'City',
+    2013,
+    'Black',
+    2000000,
+    10
 );
 
-INSERT INTO sales VALUES (
+INSERT INTO cars VALUES (
     5,
+    'Kia',
+    'Forte',
+    2021,
+    'White',
+    2300000,
+    28
+);
+
+-- Insert values into purchases table
+
+INSERT INTO purchases VALUES (
+    1,
+    2,
     4,
-    150600,
-    TO_DATE('2022-07-27', 'YYYY-MM-DD')
+    TO_DATE('2023-03-23', 'YYYY-MM-DD'),
+    2000000
 );
 
-INSERT INTO sales VALUES (
-    6,
-    7,
-    260000,
-    TO_DATE('2022-09-02', 'YYYY-MM-DD')
-);
-
-INSERT INTO sales VALUES (
-    7,
+INSERT INTO purchases VALUES (
     2,
-    190000,
-    TO_DATE('2022-11-17', 'YYYY-MM-DD')
+    1,
+    2,
+    TO_DATE('2020-05-09', 'YYYY-MM-DD'),
+    3000000
 );
 
-INSERT INTO sales VALUES (
-    8,
+INSERT INTO purchases VALUES (
+    3,
+    3,
+    2,
+    TO_DATE('2020-05-10', 'YYYY-MM-DD'),
+    3000000
+);
+
+INSERT INTO purchases VALUES (
+    4,
+    4,
+    3,
+    TO_DATE('2018-11-18', 'YYYY-MM-DD'),
+    7000000
+);
+
+INSERT INTO purchases VALUES (
     5,
-    220000,
-    TO_DATE('2023-01-18', 'YYYY-MM-DD')
+    5,
+    3,
+    TO_DATE('2022-08-09', 'YYYY-MM-DD'),
+    7000000
 );
 
-INSERT INTO sales VALUES (
-    9,
-    2,
-    235000,
-    TO_DATE('2023-03-10', 'YYYY-MM-DD')
-);
+-- Procedure to insert a new customer into customers table
 
-SELECT
-    *
-FROM
-    sales;
-
-
-
-
-
-
-
-
-
-
-
--- procedure to update the email address of a specific contractor
-
-CREATE OR REPLACE PROCEDURE update_email (
-    p_contractor_id IN NUMBER,
-    p_new_mail      IN VARCHAR2
-) AS
+CREATE OR REPLACE PROCEDURE register_customer (
+    customer_id    IN NUMBER,
+    p_first_name   IN VARCHAR2,
+    p_last_name    IN VARCHAR2,
+    p_email        IN VARCHAR2,
+    p_phone_number IN NUMBER,
+    p_address      IN VARCHAR2
+) IS
 BEGIN
-    UPDATE contractors
-    SET
-        email = p_new_mail
-    WHERE
-        contractor_id = p_contractor_id;
+    INSERT INTO customers (
+        customer_id,
+        first_name,
+        last_name,
+        email,
+        phone_number,
+        address
+    ) VALUES (
+        customer_id,
+        p_first_name,
+        p_last_name,
+        p_email,
+        p_phone_number,
+        p_address
+    );
 
     COMMIT;
-EXCEPTION
-    WHEN no_data_found THEN
-        dbms_output.put_line('Contractor Not Found !!');
-    WHEN OTHERS THEN
-        ROLLBACK;
-        dbms_output.put_line('Error : ' || sqlerrm);
-END update_email;
+END register_customer;
 
-
--- call the Procedure
+--Calling the procedure with parameters
 
 BEGIN
-    update_email(1, 'deepak@gmail.com');
+    register_customer(8, 'Priyansh', 'Jena', 'ggg@gmail.com', 9437209789,
+                     'gfchfcmdza');
 END;
 
+-- Get the table customers
 
+SELECT
+    *
+FROM
+    customers;
 
+-- Get the table purchases
 
-
-
-
-
-
-
-
--- update the availability of houses in the home_projects table when a sale is made
-
-CREATE OR REPLACE TRIGGER update_availability AFTER
-    INSERT ON sales
-    FOR EACH ROW
-DECLARE
-    v_project_id home_projects.project_id%TYPE;
-BEGIN
-    v_project_id := :new.project_id;
-    DECLARE
-        v_available_houses NUMBER;
-    BEGIN
-        SELECT
-            available_houses
-        INTO v_available_houses
-        FROM
-            home_projects
-        WHERE
-            project_id = v_project_id;
-
-        IF v_available_houses <= 0 THEN
-            dbms_output.put_line('Houses are not available !!');
-            ROLLBACK;
-        END IF;
-    END;
-
-    UPDATE home_projects
-    SET
-        available_houses = available_houses - 1
-    WHERE
-        project_id = v_project_id;
+SELECT
+    *
+FROM
+    purchases;
     
-    --COMMIT;
+-- Get the table cars
 
-END;
+SELECT
+    *
+FROM
+    cars;
 
+-- Trigger to update the purchase_count column when there is a new purchase
 
--- To invoke Trigger
+CREATE OR REPLACE TRIGGER update_purchase_count AFTER
+    INSERT ON purchases
+    FOR EACH ROW
+BEGIN
+    UPDATE cars
+    SET
+        purchase_count = purchase_count + 1
+    WHERE
+        car_id = :new.car_id;
 
-INSERT INTO sales VALUES (
+END update_purchase_count;
+
+-- Insert into Purchases to check functioning of trigger
+
+INSERT INTO purchases VALUES (
     14,
-    1,
-    120500,
-    TO_DATE('2023-03-05', 'YYYY-MM-DD')
+    5,
+    4,
+    TO_DATE('2020-05-09', 'YYYY-MM-DD'),
+    7000000
 );
 
 
 
+-- Cursor to retrieve data
 
+DECLARE
+    CURSOR purchase_cursor IS
+    SELECT
+        p.purchase_id,
+        c.first_name,
+        c.last_name,
+        ca.make,
+        ca.model,
+        p.total_amount
+    FROM
+        purchases p
+        JOIN customers c ON p.customer_id = c.customer_id
+        JOIN cars ca ON p.car_id = ca.car_id
+    ORDER BY
+        p.purchase_id;
 
+    v_purchase_id  purchases.purchase_id%TYPE := 12;
+    v_first_name   customers.first_name%TYPE;
+    v_last_name    customers.last_name%TYPE;
+    v_make         cars.make%TYPE;
+    v_model        cars.model%TYPE;
+    v_total_amount purchases.total_amount%TYPE;
+BEGIN
+    OPEN purchase_cursor;
+    LOOP
+        FETCH purchase_cursor INTO
+            v_purchase_id,
+            v_first_name,
+            v_last_name,
+            v_make,
+            v_model,
+            v_total_amount;
+        EXIT WHEN purchase_cursor%notfound;
+        dbms_output.put_line('Purchase Id:' || v_purchase_id);
+        dbms_output.put_line('Customer:'
+                             || v_first_name
+                             || ' '
+                             || v_last_name);
+        dbms_output.put_line('Car:'
+                             || v_make
+                             || ' '
+                             || v_model);
+        dbms_output.put_line('Total Amount:$' || v_total_amount);
+    END LOOP;
 
+    CLOSE purchase_cursor;
+END purchase_cursor;
 
+-- Function to get the total purchase amount of a car in a specific month  
 
-
-
-
-
--- function calculate the total sales amount for a specific project
-
-CREATE OR REPLACE FUNCTION calculate_total_sales (
-    p_project_id IN NUMBER
-) RETURN NUMBER AS
+CREATE OR REPLACE FUNCTION get_total_purchase_amount (
+    car_id IN NUMBER,
+    month  IN NUMBER,
+    year   IN NUMBER
+) RETURN NUMBER IS
     total_amount NUMBER := 0;
 BEGIN
     SELECT
-        SUM(amount)
+        SUM(total_amount)
     INTO total_amount
     FROM
-        sales
+        purchases
     WHERE
-        project_id = p_project_id;
+            car_id = car_id
+        AND EXTRACT(MONTH FROM purchase_date) = month
+        AND EXTRACT(YEAR FROM purchase_date) = year;
 
     RETURN total_amount;
-END;
-
-
-
--- call the function
-
-DECLARE
-    total_sales_amt NUMBER;
-    t_id            NUMBER;
-BEGIN
-    t_id := 5;
-    total_sales_amt := calculate_total_sales(t_id);
-    dbms_output.put_line('Total sales amount for project '
-                         || t_id
-                         || ': '
-                         || total_sales_amt);
-END;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
--- cursor to retrieve the list of projects for a specific contractor
-
-DECLARE
-    v_cont_id        contractors.contractor_id%TYPE := 2;
-    v_project_name   home_projects.project_name%TYPE;
-    v_project_status home_projects.project_status%TYPE;
-    CURSOR c_projects IS
-    SELECT
-        project_name,
-        project_status
-    FROM
-        home_projects
-    WHERE
-        contractor_id = v_cont_id;
-
-BEGIN
-    OPEN c_projects;
-    dbms_output.put_line('Project Details for Contractor ID : ' || v_cont_id);
-    dbms_output.put_line('-----------------------------------------------------------');
-    LOOP
-        FETCH c_projects INTO
-            v_project_name,
-            v_project_status;
-        EXIT WHEN c_projects%notfound;
-        dbms_output.put_line('');
-        dbms_output.put_line('Project Name : ' || v_project_name);
-        dbms_output.put_line('Project Status : ' || v_project_status);
-    END LOOP;
-
-    CLOSE c_projects;
-END;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
--- Package binding both the procedure and function
-
-CREATE OR REPLACE PACKAGE house_selling_pkg AS
-    PROCEDURE update_email (
-        p_contractor_id IN NUMBER,
-        p_new_mail      IN VARCHAR2
-    );
-
-    FUNCTION calculate_total_sales (
-        p_project_id IN NUMBER
-    ) RETURN NUMBER;
-
-END house_selling_pkg;
-
-
-
--- Package Body
-
-CREATE OR REPLACE PACKAGE BODY house_selling_pkg AS
-
-    PROCEDURE update_email (
-        p_contractor_id IN NUMBER,
-        p_new_mail      IN VARCHAR2
-    ) AS
-    BEGIN
-        UPDATE contractors
-        SET
-            email = p_new_mail
-        WHERE
-            contractor_id = p_contractor_id;
-
-        COMMIT;
-    EXCEPTION
-        WHEN no_data_found THEN
-            dbms_output.put_line('Contractor Not Found !!');
-        WHEN OTHERS THEN
-            ROLLBACK;
-            dbms_output.put_line('Error : ' || sqlerrm);
-    END update_email;
-
-    FUNCTION calculate_total_sales (
-        p_project_id IN NUMBER
-    ) RETURN NUMBER AS
-        total_amount NUMBER := 0;
-    BEGIN
-        SELECT
-            SUM(amount)
-        INTO total_amount
-        FROM
-            sales
-        WHERE
-            project_id = p_project_id;
-
-        RETURN total_amount;
-    END calculate_total_sales;
-
-END house_selling_pkg;
-
-
--- calling the procedure
-BEGIN
-    house_selling_pkg.update_email(2, 'priya23@gmail.com');
-END;
-
-
---calling the function
-DECLARE
-    total_sales_amt NUMBER;
-    t_id            NUMBER;
-BEGIN
-    t_id := 2;
-    total_sales_amt := house_selling_pkg.calculate_total_sales(t_id);
-    dbms_output.put_line('Total sales amount for project '
-                         || t_id
-                         || ': '
-                         || total_sales_amt);
-END;
-
-
-
-
-
-
-
-
-
-
-/*
-INSERT INTO contractors(contractor_id,contractor_name,phone_number,email)
-WITH names AS (
-    SELECT 1,'John',6379769834,'john@gmail.com' FROM dual UNION ALL
-    SELECT 2,'Simi',9875302356,'simran5@yahoo.com' FROM dual UNION ALL
-    SELECT 3,'Trisha',8567788931,'tri67sha@gmail.com' FROM dual UNION ALL
-    SELECT 4,'Kevin',7234594500,'kev97@yahoo.com' FROM dual UNION ALL
-    SELECT 5,'Cipher',9776540412,'ciph19@gmail.com' FROM dual
-)
-
-DELETE FROM contractors WHERE contractor_id=5;
-
-*/
-
-
---DELETE FROM sales WHERE sale_id > 8;
-
-/*
-UPDATE home_projects
-SET available_houses = 5
-WHERE project_id = 2 ;
-*/
-
-/*
--- handle an exception when inserting a new sales record with an invalid project id
 EXCEPTION
     WHEN no_data_found THEN
-        dbms_output.put_line('Project ID Not Found !!');
-    WHEN OTHERS THEN
-        --ROLLBACK;
-        dbms_output.put_line('An error occurred !!'); */
+        RETURN 0;
+END;
 
+-- Calling the function with parameters
 
-/*
+DECLARE
+    x NUMBER;
+BEGIN
+    x := get_total_purchase_amount(2, 5, 2020);
+    dbms_output.put_line(x);
+END;
 
-SELECT * FROM home_projects;
-SELECT * FROM sales;
-*/
+-- Package containing procedure and function
+-- Package specification
+
+CREATE OR REPLACE PACKAGE car_mgmt_package AS
+PROCEDURE register_customer (
+        customer_id    IN NUMBER,
+        p_first_name   IN VARCHAR2,
+        p_last_name    IN VARCHAR2,
+        p_email        IN VARCHAR2,
+        p_phone_number IN NUMBER,
+        p_address      IN VARCHAR2
+    );
+
+    FUNCTION get_total_purchase_amount (
+        car_id IN NUMBER,
+        month  IN NUMBER,
+        year   IN NUMBER
+    ) RETURN NUMBER;
+
+END car_mgmt_package;
+
+-- Package body
+
+CREATE OR REPLACE PACKAGE BODY car_mgmt_package AS
+
+-- Procedure to insert new customer
+
+PROCEDURE register_customer (
+    customer_id    IN NUMBER,
+    p_first_name   IN VARCHAR2,
+    p_last_name    IN VARCHAR2,
+    p_email        IN VARCHAR2,
+    p_phone_number IN NUMBER,
+    p_address      IN VARCHAR2
+) AS
+BEGIN
+    INSERT INTO customers (
+        customer_id,
+        first_name,
+        last_name,
+        email,
+        phone_number,
+        address
+    ) VALUES (
+        customer_id,
+        p_first_name,
+        p_last_name,
+        p_email,
+        p_phone_number,
+        p_address
+    );
+
+    COMMIT;
+END register_customer;
+
+-- Funtion to get total purchase amount of a car in specific month
+
+FUNCTION get_total_purchase_amount (
+    car_id IN NUMBER,
+    month  IN NUMBER,
+    year   IN NUMBER
+) RETURN NUMBER IS
+    total_amount NUMBER := 0;
+BEGIN
+    SELECT
+        SUM(total_amount)
+    INTO total_amount
+    FROM
+        purchases
+    WHERE
+            car_id = car_id
+        AND EXTRACT(MONTH FROM purchase_date) = month
+        AND EXTRACT(YEAR FROM purchase_date) = year;
+
+    RETURN total_amount;
+EXCEPTION
+    WHEN no_data_found THEN
+        RETURN 0;
+END get_total_purchase_amount;
+END car_mgmt_package;
+
+-- Calling function of package 
+
+DECLARE
+    res NUMBER;
+BEGIN
+    res := car_mgmt_package.get_total_purchase_amount(2, 5, 2020);
+    dbms_output.put_line(res);
+END;
+SELECT * FROM cars;
+
+--create an exception handler which handles the incorrect date 
+CREATE OR REPLACE PROCEDURE get_date
+(
+p_purchase_date IN DATE
+)
+as
+correct_date EXCEPTION;
+BEGIN
+If p_purchase_date <= '01-JAN-2018' THEN
+RAISE correct_date;
+END IF;
+
+EXCEPTION
+WHEN correct_date THEN
+dbms_output.put_line('Enter correct date');
+WHEN OTHERS THEN 
+dbms_output.put_line('Error occured');
+END;
+
+execute get_date('14-FEB-2017');
